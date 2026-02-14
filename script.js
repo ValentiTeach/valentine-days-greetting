@@ -407,10 +407,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Auto-start on first interaction
   let musicAutoStarted = false;
-  function autoStartMusic() {
+ function autoStartMusic() {
     if (musicAutoStarted) return;
     musicAutoStarted = true;
     if (!musicPlaying) {
       toggleMusic();
     }
+  } 
 });
