@@ -169,15 +169,33 @@
     setTimeout(() => { burst.innerHTML = ''; burst.classList.remove('active'); }, 2000);
   }
 
-  // ============= QUOTE SEQUENCE =============
+  // ============= QUOTE SEQUENCE (EXPANDED) =============
   const quotes = [
-    { emoji: '🌟', text: 'Ти — та єдина, хто змушує моє серце битися швидше' },
-    { emoji: '🦋', text: 'З тобою кожна мить — як перший подих весни' },
-    { emoji: '🔥', text: 'Твоя усмішка — найтепліший вогонь у холодну ніч' },
-    { emoji: '🌙', text: 'Ти — місяць, що освітлює мій найтемніший шлях' },
-    { emoji: '💫', text: 'Серед усіх зірок я обрав би тебе знову і знову' },
-    { emoji: '🌹', text: 'Ти унікальна. Ти неповторна. Ти — моя.' },
+    { emoji: '🚀', text: 'Ти натиснула «Так» — і ми полетіли крізь Всесвіт разом' },
+    { emoji: '⭐', text: 'У цьому космосі мільярди зірок, але жодна не сяє так, як ти' },
+    { emoji: '🌙', text: 'Ти — мій Місяць. Навіть у найтемнішу ніч ти освітлюєш мій шлях' },
+    { emoji: '☀️', text: 'Ти — моє Сонце. Весь мій всесвіт обертається навколо тебе' },
+    { emoji: '🪐', text: 'Як Сатурн тримає свої кільця — так і я тримаю тебе у своєму серці' },
+    { emoji: '💫', text: 'Мене тягне до тебе сильніше, ніж гравітація до зірки' },
+    { emoji: '🌌', text: 'Наше кохання — як галактика. Безмежне, яскраве і тільки наше' },
+    { emoji: '☄️', text: 'Ти влетіла в моє життя, як комета — і все засяяло' },
+    { emoji: '🔭', text: 'Я шукав тебе серед мільярдів світів — і нарешті знайшов' },
+    { emoji: '🌍', text: 'На цій маленькій планеті є лише одна ти. І це — диво' },
+    { emoji: '✨', text: 'Ти — зоряний пил, з якого зіткана моя найкраща мрія' },
+    { emoji: '🛸', text: 'Якщо кохання — це космос, то я хочу летіти в ньому вічно з тобою' },
+    { emoji: '🌠', text: 'Кожна падаюча зірка — це моє бажання бути поруч з тобою' },
+    { emoji: '🕳️', text: 'Моє серце — як чорна діра. Воно притягує лише тебе' },
+    { emoji: '🛰️', text: 'Ти — мій сигнал у тиші Всесвіту. Я завжди тебе чую' },
+    { emoji: '⏳', text: 'Навіть якби час зупинився — я б вічно дивився на зірки з тобою' },
+    { emoji: '🌟', text: 'Серед усіх сузір\'їв — ти моє найулюбленіше' },
+    { emoji: '💖', text: 'Ти — моя зірка серед мільярдів у Всесвіті' },
+    { emoji: '🌹', text: 'З Днем Святого Валентина, моя космічна кохана 💝' },
   ];
+
+  // Display time per quote (ms) — slower for a more emotional experience
+  const QUOTE_VISIBLE_MS = 5000;
+  const QUOTE_TOTAL_MS = 6500;
+  const QUOTE_START_DELAY = 1500;
 
   function startQuoteSequence() {
     const emojiEl = document.getElementById('quoteEmoji');
@@ -205,14 +223,14 @@
 
     function showQuote() {
       if (index >= quotes.length) {
-        quoteDisplay.style.transition = 'opacity 0.8s ease';
+        quoteDisplay.style.transition = 'opacity 1s ease';
         quoteDisplay.style.opacity = '0';
         setTimeout(() => {
           quoteDisplay.style.display = 'none';
           const fb = document.getElementById('finalBlock');
           fb.style.display = '';
           requestAnimationFrame(() => requestAnimationFrame(() => fb.classList.add('visible')));
-        }, 900);
+        }, 1100);
         return;
       }
 
@@ -238,19 +256,19 @@
         textEl.classList.add('show');
       });
 
-      // Fade out
+      // Fade out — stay visible longer
       setTimeout(() => {
         emojiEl.classList.remove('show');
         emojiEl.classList.add('hide');
         textEl.classList.remove('show');
         textEl.classList.add('hide');
-      }, 3800);
+      }, QUOTE_VISIBLE_MS);
 
       index++;
-      setTimeout(showQuote, 5000);
+      setTimeout(showQuote, QUOTE_TOTAL_MS);
     }
 
-    setTimeout(showQuote, 1200);
+    setTimeout(showQuote, QUOTE_START_DELAY);
   }
 
   // Spawn mini hearts around an element
@@ -396,7 +414,11 @@
       audio.volume = 0;
       audio.play().then(() => {
         fadeAudio(0.6, 2000);
-      }).catch(() => {});
+      }).catch(() => {
+        // Retry on next interaction if autoplay blocked
+        musicAutoStarted = false;
+        musicPlaying = false;
+      });
       btn.classList.remove('muted');
       btn.classList.add('playing');
       label.classList.add('show');
