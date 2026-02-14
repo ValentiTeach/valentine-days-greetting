@@ -1,5 +1,5 @@
-
-  // ============= DETECT MOBILE =============
+document.addEventListener('DOMContentLoaded', () => {
+    // ============= DETECT MOBILE =============
   const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   const heartInterval = isMobile ? 700 : 400;
   const maxFloatingHearts = isMobile ? 8 : 15;
@@ -413,4 +413,4 @@
     if (!musicPlaying) {
       toggleMusic();
     }
-  }
+});
